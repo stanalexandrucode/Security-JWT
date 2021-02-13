@@ -12,7 +12,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import static java.util.Collections.singletonList;
@@ -36,7 +38,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 true, getAuthorities(user.getRoles().name()));
     }
 
-    private Collection<? extends GrantedAuthority> getAuthorities(String role) {
-        return singletonList(new SimpleGrantedAuthority(role));
+//    private Collection<? extends GrantedAuthority> getAuthorities(String role) {
+//        return singletonList(new SimpleGrantedAuthority(role));
+//    }
+
+
+    public Collection<? extends GrantedAuthority> getAuthorities(String role) {
+        List<GrantedAuthority> list = new ArrayList<>();
+
+        list.add(new SimpleGrantedAuthority("ROLE_" + role));
+
+        return list;
     }
+
 }

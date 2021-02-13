@@ -7,9 +7,15 @@ import lombok.AllArgsConstructor;
 import org.json.JSONException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+
+/**
+ * @hasRole('ROLE_) @hasAnyRole('ROLE_) @hasAuthority('permission') @hasAnyAuthority('permission')
+ */
 
 
 @AllArgsConstructor
@@ -84,6 +90,7 @@ public class TodoController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<List<ToDo>> getAllTodos(){
         List<ToDo> toDos = toDoService.getAllTodos();
         return new ResponseEntity<>(toDos, HttpStatus.OK);
